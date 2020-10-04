@@ -1,0 +1,132 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+
+{% block head_title %}
+Experiment Orbit
+{% endblock %}
+
+{% block title %}
+
+{% endblock %}
+
+{% block content %}
+
+<h4>Auszahlung</h4><hr>
+
+
+<div class="card bg-light m-3">
+
+  <div class="alert alert-primary" role="alert">
+    <p>Um Ihre Auszahlung zu erhalten, schicken Sie bitte eine formlose E-Mail mit dem Betreff <br><i>"Experimentvergütung Orbit"</i>
+      an unsere Teamassistenz <a href="mailto:karina.raith@wirtschaft.uni-giessen.de">karina.raith@wirtschaft.uni-giessen.de</a></p>
+  </div>
+  
+  <div class="card-body">
+    <p>In die E-Mail schreiben Sie bitte folgenden Inhalt:</p>
+
+      <div class="card">
+        <h6 class="card-header">Experimentvergütung Orbit</h6>
+<div class="card-body mail"><b>ID:</b> {{ player.uuid }}
+<br><b>Vergütung:</b> {{ participant.payoff_plus_participation_fee }}
+<br><b>Nachname, Vorname vom Kontoinhaber:</b> Nachname, Vorname
+<br><b>BIC:</b> BIC von Ihrem Konto
+<br><b>IBAN:</b> IBAN von Ihrem Konto</div>
+      </div>
+      <br>
+        <button type="button" class="nexttab btn-info btn btn-sm next" id="copybutton">Inhalt kopieren</button>
+
+      <br><br>
+      <ul>
+        <li>Die E-Mail Vorlage können Sie direkt kopieren</li>
+        <li>Lassen Sie die Vergütung und ID unverändert</li>
+        <li>Um sicherzustellen, dass Ihre Daten anonym bleiben, erhalten mehrere Teilnehmer die gleiche ID</li>
+        <li>Beispiel einer IBAN-Nummer: <i>DE89370400440532013000</i> (22 Zeichen)</li>
+        <li>Beispiel einer BIC-Nummer: <i>COBADEFF</i> (8 Zeichen)</li>
+      </ul>
+    </div>
+</div>
+
+<br>
+<h4>Gesamtvergütung</h4><hr>
+<table class="table table-striped">
+  <tbody>
+    <tr>
+      <th scope="row">Fixe Vergütung</th>
+      <td style="text-align: center;">{{ session.config.participation_fee }}</td>
+    </tr>
+    <tr>
+      <th scope="row">Variable Vergütung der Hauptaufgabe</th>
+      {% if player.board_decision == "continuation" and player.project_success_outcome == 1 %}
+      <td style="text-align: center;">{{ Constants.success_boni|c }}</td>
+      {% elif player.board_decision == "continuation" and player.project_success_outcome == 0 %}
+      <td style="text-align: center;">{{ Constants.failure_boni|c }}</td>
+      {% else %}
+      <td style="text-align: center;">{{ Constants.alternative_boni|c }}</td>
+      {% endif %}
+    </tr>
+    <tr>
+      <th scope="row">Vergütung der Lotterie</th>
+      {% if player.lottery_choice == 99 %}
+      <td style="text-align: center;">Nicht zuordenbar</td>
+      {% elif player.lottery_choice > player.lottery_draft and player.lottery_outcome <= scsrate %}
+      <td style="text-align: center;">{{ Constants.lottery_success|c }}</td>
+      {% elif player.lottery_choice > player.lottery_draft and player.lottery_outcome > scsrate %}      
+      <td style="text-align: center;">{{ Constants.lottery_failure|c }}</td>
+      {% else %}
+      <td style="text-align: center;">{{ Constants.lottery_safe|c }}</td>
+      {% endif %}
+    </tr>
+    <tr>
+      <th scope="row">Ihre Gesamtvergütung beträgt</th>
+      <td style="text-align: center;"><b>{{ participant.payoff_plus_participation_fee }}</b></td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="alert alert-primary" role="alert">
+  <div class="form-check required">
+    <label class="form-check-label  field-initial_checkbox" for="check">
+      <input id="check" type="checkbox" required="" class="form-check-input">
+      Ich habe die E-Mail mit den relevanten Infos abgesendet
+    </label>
+  </div>
+</div>
+
+<br>
+<div id="next" style="text-align: right;">
+  <button class="btn btn-primary" id="nextbutton">Experiment beenden</button>
+</div>
+
+<script>
+
+function copyToClipboard(element) {
+  var $temp = $("<textarea>");
+  $("body").append($temp);
+  var html = $(element).text();
+  // html = html.replace(/<br>/g, ""); // or \r\n
+  $temp.val(html).select();
+  document.execCommand("copy");
+  $temp.remove();
+}
+
+  $('#copybutton').click(function () { 
+    copyToClipboard(".mail"); 
+    setTooltip('Inhalt kopiert');
+    hideTooltip();
+    });
+
+  function setTooltip(message) {
+  $('#copybutton').tooltip('hide')
+    .attr('data-original-title', message)
+    .tooltip('show');
+}
+
+function hideTooltip() {
+  setTimeout(function() {
+    $('#copybutton').tooltip('hide');
+  }, 1000);
+}
+
+</script>
+
+{% endblock %}

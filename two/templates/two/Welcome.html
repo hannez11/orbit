@@ -1,0 +1,62 @@
+<style>
+    ul {
+        font-weight: 500;
+    }
+</style>
+
+{% extends "global/Page.html" %}
+{% load otree static %}
+
+
+{% block head_title %}
+Experiment Orbit
+{% endblock %}
+{% block title %}
+<h3>Willkommen zum zweiten Teil des Experiments! <br> Vielen Dank für Ihre Unterstützung!</h3> <hr>
+{% endblock %}
+
+{% block content %}
+
+    <ul class="list-group list-group-flush" style="font-size:15px">
+        <li class="list-group-item">Bitte lesen Sie sich alle Informationen sorgfältig durch.</li>
+        <li class="list-group-item">Am Ende des Experiments erhalten Sie Details zu Ihrer Vergütung.<br>Die Höhe der Vergütung hängt von mehreren Entscheidungen ab, die Sie während des Experiments treffen werden.</li>
+        <li class="list-group-item">Es gibt keine richtigen bzw. falschen Antworten. Wir bitten Sie aber um eine ehrliche Beantwortung der Fragen.</li>
+        <li class="list-group-item">Dies ist ein betriebswirtschaftliches Experiment.<br>Folglich werden Sie in diesem Experiment zu keinem Zeitpunkt getäuscht oder belogen.</li>
+        <li class="list-group-item">Ihre Antworten werden vollständig anonym behandelt.</li>
+        <li class="list-group-item">Das Experiment dauert etwa 40 Minuten. Falls Sie das Experiment vorzeitig abbrechen, dann erhalten Sie keine Vergütung.</li>
+        <li class="list-group-item">Bitte stellen Sie Ihren Webbrowser in den Vollbildmodus bis zum Ende des Experiments (Windows: <i>F11</i> / Mac: <i>Ctrl+Cmd+F</i>).</li>
+        <li class="list-group-item">Bitte legen Sie sich einen Zettel und Stift zurecht, falls Sie sich Notizen während des Experiments machen möchten.</li>
+        <li class="list-group-item">Auf der nächsten Seite kommen Sie zur Anleitung der Hauptaufgabe des Experiments.</li>
+    </ul>
+
+    <br>
+
+    <div style="text-align:right">
+        <button class="btn btn-primary" type="button" id="nextbutton" onclick="fullscreenCheck()" data-toggle="tooltip" title="Bitte führen Sie das Experiment von Ihrem Laptop oder PC durch!">Weiter zur Anleitung</button>
+    </div>
+
+<script>
+
+function fullscreenCheck() {
+    if ((screen.availHeight || screen.height-30) <= window.innerHeight) {
+    ;
+    } else {
+        alert('Bitte stellen Sie Ihren Webbrowser in den Vollbildmodus bis zum Ende des Experiments (Windows: F11 / Mac: Ctrl+Cmd+F).');
+    }
+}
+
+if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
+    alert("Bitte führen Sie das Experiment an Ihrem Laptop oder Desktop PC durch!");
+} else {
+    console.log("123");
+    $('#nextbutton').removeAttr("type"); // removes type attribute from next button so form can be submitted
+    $('#nextbutton').removeAttr('title'); // removes tooltip
+}
+
+$(document).ready(function(){
+  $('[data-toggle="tooltip"]').tooltip();   
+});
+
+</script>
+{% endblock %}
+

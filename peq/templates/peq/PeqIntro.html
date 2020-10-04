@@ -1,0 +1,32 @@
+<style>
+    ul {
+        font-weight: 500;
+    }
+</style>
+
+{% extends "global/Page.html" %}
+{% load otree static %}
+
+{% block head_title %}
+Experiment Orbit
+{% endblock %}
+
+{% block title %}
+
+{% endblock %}
+
+{% block content %}
+
+<ul class="list-group list-group-flush" style="font-size:15px;">
+    <li class="list-group-item">Beantworten Sie bitte abschließend noch einige Fragen.</li>
+    <li class="list-group-item">Dabei gibt es keine richtigen bzw. falschen Antworten. Wir bitten Sie aber um eine ehrliche Beantwortung der Fragen.</li>
+    <li class="list-group-item">Ihre Antworten werden von der Experimentleitung vollständig anonym behandelt.</li>
+    <li class="list-group-item">Nachdem Sie die Fragen beantwortet haben, erhalten Sie detaillierte Informationen zu Ihrer Vergütung.</li>
+</ul>
+
+<br>
+<div style="text-align: right">
+    <button id="nextbutton" class="btn btn-primary">Weiter zu den Fragen</button>
+</div>
+
+{% endblock %}

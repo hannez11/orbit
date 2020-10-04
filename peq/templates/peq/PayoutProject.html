@@ -1,0 +1,121 @@
+<style>
+    .otree-timer {
+        display: none;
+    }
+
+    /* needed for animated progess bar */
+    .progress.active .progress-bar {
+    -webkit-transition: none !important;
+    transition: none !important;
+    }
+</style>
+
+{% extends "global/Page.html" %}
+{% load otree static %}
+
+{% block head_title %}
+Experiment Orbit
+{% endblock %}
+
+{% block title %}
+    
+{% endblock %}
+
+{% block content %}
+
+<div id="progessbar">
+
+    <div class="alert alert-primary" role="alert" style="text-align: center;">
+        Das Endergebnis des Projekts {{ participant.vars.initial_decision }} wird berechnet
+    </div>
+
+    <div class="col-xs-12 col-sm-12 progress-container">
+        <div class="progress progress-striped active">
+            <div class="progress-bar progress-bar-success" style="width:0%"></div>
+        </div>
+    </div>
+
+</div>
+
+<div id="payout" style="display:none;">
+    <h4>Variable Vergütung der Hauptaufgabe</h4><hr>
+    <table class="table table-striped">
+        <tbody>
+          <tr>
+            <th scope="row">Ihre Empfehlung bzgl. Projektfortführung</th>
+            <td style="text-align: center;">{{ participant.vars.sub_decision }}%</td>
+          </tr>
+          <tr>
+            <th scope="row">Die Geschäftsführung hat Folgendes entschieden</th>
+            {% if participant.vars.sub_decision == 0 or participant.vars.sub_decision < player.board_decision_lottery %}
+            <td style="text-align: center;">Das Projekt wurde abgebrochen und <br> es wurde in die Alternative investiert</td>
+            {% else %}
+            <td style="text-align: center;">Das Projekt wird fortgesetzt</td>
+            {% endif %}
+          </tr>
+          {% if player.board_decision == "continuation" %}
+          <tr>
+            <th scope="row">Endergebnis des Projekts</th>
+              {% if player.project_success_outcome == 1 %}
+              <td style="text-align: center;">Das Best-Case ist eingetreten</td>
+              {% else %}
+              <td style="text-align: center;">Der Worst-Case ist eingetreten</td>
+              {% endif %}
+          </tr>
+          {% endif %}
+          {% if player.board_decision == "continuation" and player.project_success_outcome == 1 %}
+          <tr>
+            <th scope="row">Finales Guthaben auf dem Projektkonto</th>
+            <td style="text-align: center;">9,5 Mio. Lira</td>
+          </tr>
+          <tr>
+            <th scope="row">Ihre variable Vergütung basierend auf dem Projektkontostand beträgt</th>
+            <td style="text-align: center;">{{ Constants.success_boni|c }}</td>
+          </tr>
+          {% elif player.board_decision == "continuation" and player.project_success_outcome == 0 %}
+          <tr>
+            <th scope="row">Finales Guthaben auf dem Projektkonto</th>
+            <td style="text-align: center;">4,5 Mio. Lira</td>
+          </tr>
+          <tr>
+            <th scope="row">Ihre variable Vergütung basierend auf dem Projektkontostand beträgt</th>
+            <td style="text-align: center;">{{ Constants.failure_boni|c }}</td>
+          {% else %}
+          <tr>
+            <th scope="row">Finales Guthaben auf dem Projektkonto</th>
+            <td style="text-align: center;">7 Mio. Lira</td>
+          </tr>
+          <tr>
+            <th scope="row">Ihre variable Vergütung basierend auf dem Projektkontostand beträgt</th>
+            <td style="text-align: center;">{{ Constants.alternative_boni|c }}</td>
+          {% endif %}
+        </tbody>
+    </table>
+</div>
+
+<br>
+<div id="next" style="text-align: right; display:none;">
+  <button id="nextbutton" class="btn btn-primary">Weiter zur Vergütung der Lotterie</button>
+</div>
+
+<!-- needed for animated progress bar, 6000 equals loading time -->
+<script>
+$(".progress-bar").animate({
+    width: "100%"
+}, 3000);
+
+var sec = 0; // global variable
+
+// increasing timer
+function pad ( val ) { return val > 9 ? val : "0" + val; }
+setInterval( function(){
+    pad(++sec); // increase sec variable
+    if (sec > 3) {
+        $("#progessbar").hide(); // hide progessbar
+        $("#payout").show(); // show payout
+        $("#next").show(); // show payout
+    }
+}, 1000);
+</script>
+
+{% endblock %}

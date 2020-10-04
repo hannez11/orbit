@@ -1,0 +1,58 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+
+{% block head_title %}
+Experiment Orbit
+{% endblock %}
+
+{% block title %}
+
+{% endblock %}
+
+{% block content %}
+
+<div class="card">
+    <div class="card-header">
+        <p>Die Geschäftsführung hat mittlerweile festgelegt, dass bei Investitionsentscheidungen immer eine externe Unternehmensberatung eingebunden werden soll.</p> 
+        <p>Der Auftrag der Geschäftsführung an die Beratung lautet in diesen Fällen immer wie folgt:</p>
+    </div>
+    <div class="card-body">
+        <div class="alert alert-primary" role="alert" style="font-family:Georgia, serif;">
+            <p>In der Anlage erhalten Sie unsere Planungsdaten für ein aktuelles Projekt.</p>
+            <p>Um unsere interne Entscheidung, ob das Projekt fortgeführt werden soll oder nicht, zu unterstützen, bitten wir Sie, diejenigen Aspekte zu identifizieren, die explizit gegen eine Fortführung des Projekts sprechen.</p> 
+            <p>Sie brauchen also keine Empfehlung abgeben, ob Sie die Projektinvestition generell als vorteilhaft einschätzen.</p>
+            <p>Stattdessen sollen Sie nur <b>diejenigen Aspekte herausarbeiten, die potenziell zum Scheitern des Projekts</b> führen könnten.</p>
+            <p>_______________________</p>
+            <p><i>Geschäftsführung Kitchen World</i></p>
+        </div>
+    </div>
+</div>
+
+<br>
+<p>Die Geschäftsführung hat einen entsprechenden Auftrag - basierend auf den Ihnen bekannten Informationen (<i>Projekt Smart {{ player.initial_decision }}, Update 30.06.2021</i>) - an die Unternehmensberatung übermittelt.</p>
+<p>Sobald Sie auf <i>„Weiter“</i> klicken erhalten Sie die Analyse des Beraterteams, die mögliche Schwachstellen an Ihrem Projekt Smart {{ player.initial_decision }} aufzeigt.</p>
+
+<div style="text-align: right">
+    <button id="nextbutton" class="btn btn-primary">Weiter zur Analyse</button>
+  </div>
+
+<!-- footerbar with instructions and calculator modals -->
+<!-- include "global/FooterContent.html"  -->
+
+<!-- hidden field to store time spent on page in seconds -->
+<input type="hidden" name="timer_DA1" id="timer_DA1" value=0>
+
+<script>
+
+var sec = 0; // global variable
+
+// increasing timer
+function pad ( val ) { return val > 9 ? val : "0" + val; }
+setInterval( function(){
+    $("#seconds").html(pad(++sec));
+    $("#timer_DA1").val(sec); // store seconds spent on page in hidden field
+}, 1000);
+
+</script>
+
+{% endblock %}

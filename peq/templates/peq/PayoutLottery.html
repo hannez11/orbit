@@ -1,0 +1,119 @@
+<style>
+    .otree-timer {
+        display: none;
+    }
+
+    /* needed for animated progess bar */
+    .progress.active .progress-bar {
+    -webkit-transition: none !important;
+    transition: none !important;
+    }
+</style>
+
+{% extends "global/Page.html" %}
+{% load otree static %}
+
+{% block head_title %}
+Experiment Orbit
+{% endblock %}
+
+{% block title %}
+    
+{% endblock %}
+
+{% block content %}
+
+{% if player.lottery_choice == 99 %}
+<div class="alert alert-primary" role="alert">
+  Sie haben einen anderen Code eingegeben als im ersten Teil vom Experiment.<br>Entsprechend können wir Ihnen leider keine Vergütung für die Lotterie-Aufgabe zuordnen.
+</div>
+
+<br>
+<div id="next" style="text-align: right;">
+  <button id="nextbutton" class="btn btn-primary">Weiter zur Gesamtvergütung</button>
+</div>
+
+{% else %}
+
+<div id="progessbar">
+
+    <div class="alert alert-primary" role="alert" style="text-align: center;">
+        Das Ergebnis der Lotterie wird augelost
+    </div>
+
+    <div class="col-xs-12 col-sm-12 progress-container">
+        <div class="progress progress-striped active">
+            <div class="progress-bar progress-bar-success" style="width:0%"></div>
+        </div>
+    </div>
+
+</div>
+
+<div id="payout" style="display:none;">
+  <h4>Vergütung der Lotterie</h4><hr>
+  <table class="table table-striped">
+    <tbody>
+      <tr>
+        <th scope="row">Im ersten Teil vom Experiment hatten Sie gewählt, dass Sie ab<br>folgendem Szenario die sichere Auszahlung erhalten wollen</th>
+        <td style="text-align: center;">ab Szenario {{ player.lottery_choice }}</td>
+      </tr>
+      <tr>
+        <th scope="row">Es wurde zufällig folgendes Szenario ausgelost</th>
+        <td style="text-align: center;">Szenario {{ player.lottery_draft }} ({{ scsrate }}% Gewinnwahrscheinlichkeit)</td>
+      </tr>
+      {% if player.lottery_choice > player.lottery_draft and player.lottery_outcome <= scsrate %}
+      <tr>
+        <th scope="row">Sie nehmen an der Lotterie teil. Sie haben die Lotterie</th>
+        <td style="text-align: center;">gewonnen</td>
+      </tr>
+      <tr>
+        <th scope="row">Sie erhalten folgende Vergütung in der Lotterie-Aufgabe</th>
+        <td style="text-align: center;">{{ Constants.lottery_success|c }}</td>
+      </tr>
+      {% elif player.lottery_choice > player.lottery_draft and player.lottery_outcome > scsrate %}
+      <tr>
+        <th scope="row">Sie nehmen an der Lotterie teil. Sie haben die Lotterie</th>
+        <td style="text-align: center;">nicht gewonnen</td>
+      </tr>
+      <tr>
+        <th scope="row">Sie erhalten folgende Vergütung in der Lotterie-Aufgabe</th>
+        <td style="text-align: center;">{{ Constants.lottery_failure|c }}</td>
+      </tr>
+      {% else %}
+      </tr>
+          <th scope="row">Sie nehmen nicht an der Lotterie teil. Sie erhalten die sichere Auszahlung</th>
+          <td style="text-align: center;">{{ Constants.lottery_safe|c }}</td>
+      {% endif %}
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<br>
+<div id="next" style="text-align: right; display:none;">
+  <button id="nextbutton" class="btn btn-primary">Weiter zur Gesamtvergütung</button>
+</div>
+
+<!-- needed for animated progress bar, 6000 equals loading time -->
+<script>
+$(".progress-bar").animate({
+    width: "100%"
+}, 3000);
+
+var sec = 0; // global variable
+
+// increasing timer
+function pad ( val ) { return val > 9 ? val : "0" + val; }
+setInterval( function(){
+    pad(++sec); // increase sec variable
+    if (sec > 3) {
+        $("#progessbar").hide(); // hide progessbar
+        $("#payout").show(); // show payout
+        $("#next").show(); // show payout
+    }
+}, 1000);
+</script>
+
+{% endif %}
+
+{% endblock %}

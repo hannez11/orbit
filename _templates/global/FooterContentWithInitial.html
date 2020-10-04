@@ -1,0 +1,378 @@
+{% load otree static %}
+
+{% block global_styles  %}
+<link href="{% static 'orbit/footer.css' %}" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+
+<br><br>
+<hr>
+      <div class="container" style="width: 45%;">
+          <div class="row" style="text-align: center; background-color: #fff;">
+
+            <div class="col-sm">
+              <!-- Modal button projectidea -->
+                <button type="button" id="projectbtn" class="btn btn-light btn-sm" data-toggle="modal" data-target="#project" style="border: 1px solid #a7a7a7">Projektidee</button>
+            </div>
+        
+            <div class="col-sm">
+              <button type="button" id="instructionsbtn" class="btn btn-light btn-sm" data-toggle="modal" data-target="#instructions" style="border: 1px solid #a7a7a7">Anleitung</button>
+            </div>
+        
+            <div class="col-sm">
+              <!-- Modal button -->
+                <button type="button" id="calcbtn" class="btn btn-light btn-sm" data-toggle="modal" data-target="#calc" style="border: 1px solid #a7a7a7">Taschenrechner</button>
+            </div>
+        
+          </div>
+      </div>
+
+
+    <!-- projectidea -->
+    <div class="modal fade" id="project" tabindex="-1" role="dialog" aria-labelledby="projectLabel" aria-hidden="true">
+      <div class="modal-dialog modalw">
+          <div class="modal-content">
+
+              <div class="modal-header">
+                   <h4 class="modal-title" id="projectLabel"></h4>
+              </div>
+
+              <div class="modal-body">
+                
+                {% if player.initial_decision == "Coffee" %}
+                <!-- start -->
+                <div class="container">
+                  <div class="row">
+                        
+                        <div class="col-sm">
+                            <h3>Projektidee #1</h3>
+                            <h3><b>Smart Coffee</b></h3>
+                        </div>
+                        
+                        <div class="col-sm">
+                            <img src="{% static "orbit/kw.png" %}" style="float:right">
+                        </div>
+                        
+                    </div>
+                  </div>
+
+                <hr>
+
+                  <div class="card-deck" style="text-align: center;">
+                    <div class="card">
+                      <div class="card-header">
+                        Geplanter Projektstart
+                      </div>
+                      <div class="card-body">
+                        <p class="card-text" style="text-align: center;">30 Juni 2020</p>
+                      </div>
+                    </div>
+
+                    <div class="card">
+                      <div class="card-header">
+                        Projektverantwortlicher
+                      </div>
+                      <div class="card-body">
+                        <p class="card-text" style="text-align: center;">Leitender Manager <br>Abteilung „Projekte“</p>
+                      </div>
+                    </div>
+
+                    <div class="card">
+                      <div class="card-header">
+                        Aktuelles Guthaben Projektkonto
+                      </div>
+                      <div class="card-body">
+                        <p class="card-text" style="text-align: center; font-weight: 510">7,5 Mio. Lira</p>
+                      </div>
+                    </div>
+
+                  </div>
+                  <hr>
+                
+                  <div class="row">
+                    <div class="col-md-3">
+                      <ul class="nav nav-pills flex-column" id="myTab" role="tablist">
+                        <li class="nav-item">
+                          <a class="nav-link" aria-selected="false"><b>Smart Coffee</b></a>
+                        </li>
+                        <li class="nav-item">
+                          <a class="nav-link active" id="Beschreibung-tab" data-toggle="tab" href="#Beschreibung2" role="tab" aria-controls="Beschreibung" aria-selected="true">Übersicht</a>
+                        </li>
+                        <li class="nav-item">
+                          <a class="nav-link" id="softfacts-tab" data-toggle="tab" href="#softfacts2" role="tab" aria-controls="softfacts" aria-selected="false" onclick="softfacts()">Weitere Informationen</a>
+                        </li>
+                      </ul>
+                    </div>
+
+                    <div class="col-md-9">
+                        <div class="tab-content" id="myTabContent">
+
+                          <div class="tab-pane fade show active" id="Beschreibung2" role="tabpanel" aria-labelledby="Beschreibung2-tab">
+                            <div class="card">
+                              <h5 class="card-header">Projekt-Übersicht</h5>
+                              <div class="card-body">
+                              <h4>Beschreibung</h4><hr>
+                              <p>Smart Coffee ist ein Kaffeevollautomat mit künstlicher Intelligenz, der basierend auf den Trinkgewohnheiten der einzelnen Nutzer ein optimales Kaffee/Milch/Zucker-Profil erstellt. Smart Coffee enthält ein automatisches Reinigungssystem, wodurch Kaffeetrinkern ein Großteil des Reinigungsprozesses erspart wird.</p>
+                              <br>
+                              <h4>Anfangsinvestition</h4><hr>
+                                <p>Die Konzeption des Smart Coffee Prototyps kostet 0,5 Mio. Lira.</p>
+                                <p>Die weiteren Kosten für den Entwicklungsprozess liegen bei 2,5 Mio. Lira.</p>
+                                <p>Zusätzlich wird eine Software benötigt, die intern in der Abteilung Smart Kitchen programmiert wird. Die Programmierung wird 1 Mio. Lira kosten.</p>
+                              <br>
+                              <h4>Finanzen</h4><hr>
+                              <p>Unter Berücksichtigung aller relevanten Infos wurden folgende Werte berechnet:</p>
+                              <table class="table table-striped">
+                                <thead style="text-align: center;">
+                                  <tr>
+                                    <th scope="col"></th>
+                                    <th scope="col">Smart Coffee</th>
+                                  </tr>
+                                </thead>
+                                <tr>
+                                  <th scope="row" style="width: 50%;">Benötigte Anfangsinvestition</th>
+                                  <td style="text-align: center;">4 Mio. Lira</td>
+                                </tr>
+                                <tr>
+                                  <th scope="row">Erwartete diskontierte Einzahlungsüberschüsse aus den Rückflüssen der Investition</th>
+                                  <td style="text-align: center; width: 35%;">8,5 Mio. Lira</td>
+                                </tr>
+                              </table>
+                              </div>
+                          </div>
+                        </div>
+
+                        <div class="tab-pane fade" id="softfacts2" role="tabpanel" aria-labelledby="softfacts2-tab">
+                          <div class="card">
+                            <h5 class="card-header">Weitere Informationen</h5>
+                            <div class="card-body">
+                                <p>Primärer Absatzmarkt: Nordamerika</p><hr>
+                                <p>Zurzeit gibt es keinen ernstzunehmenden Wettbewerb im Bereich Smart Coffeemaker. Eine Marktanalyse gibt auch keine Hinweise darauf, dass ein Wettbewerber die Entwicklung eines Smart Coffeemakers plant.</p><hr>
+                                <p>Das Marktpotenzial ist im Kaffeemarkt höher als im Teemarkt aufgrund der allgemein höheren Popularität von Kaffeeprodukten.</p><hr>
+                                <p>Allerdings ist die Zahlungsbereitschaft der Kunden im Kaffeemarkt niedriger als die der Kunden im Teemarkt.</p><hr>
+                                <p>Für den Verkauf von Smart Coffee können höchstwahrscheinlich bestehende Synergien mit dem primären Vertriebspartner von Kitchen World genutzt werden.</p>
+                            </div>
+                          </div>
+                        </div>
+
+                      </div>
+                    </div>
+
+                </div>
+                <!-- end -->
+
+                {% elif player.initial_decision == "Tee" %}
+                <!-- start -->
+                <div class="container">
+                  <div class="row">
+                        
+                        <div class="col-sm">
+                            <h3>Projektidee #2</h3>
+                            <h3><b>Smart Tea</b></h3>
+                        </div>
+                        
+                        <div class="col-sm">
+                            <img src="{% static "orbit/kw.png" %}" style="float:right">
+                        </div>
+                        
+                    </div>
+                  </div>
+
+                <hr>
+
+                  <div class="card-deck" style="text-align: center;">
+                    <div class="card">
+                      <div class="card-header">
+                        Geplanter Projektstart
+                      </div>
+                      <div class="card-body">
+                        <p class="card-text" style="text-align: center;">30 Juni 2020</p>
+                      </div>
+                    </div>
+
+                    <div class="card">
+                      <div class="card-header">
+                        Projektverantwortlicher
+                      </div>
+                      <div class="card-body">
+                        <p class="card-text" style="text-align: center;">Leitender Manager <br>Abteilung „Projekte“</p>
+                      </div>
+                    </div>
+
+                    <div class="card">
+                      <div class="card-header">
+                        Aktuelles Guthaben Projektkonto
+                      </div>
+                      <div class="card-body">
+                        <p class="card-text" style="text-align: center; font-weight: 510">7,5 Mio. Lira</p>
+                      </div>
+                    </div>
+
+                  </div>
+                  <hr>
+                
+                  <div class="row">
+                    <div class="col-md-3">
+                      <ul class="nav nav-pills flex-column" id="myTab" role="tablist">
+                        <li class="nav-item">
+                          <a class="nav-link" aria-selected="false"><b>Smart Tea</b></a>
+                        </li>
+                        <li class="nav-item">
+                          <a class="nav-link active" id="Beschreibung2-tab" data-toggle="tab" href="#Beschreibung2" role="tab" aria-controls="Beschreibung2" aria-selected="true">Übersicht</a>
+                        </li>
+                        <li class="nav-item">
+                          <a class="nav-link" id="softfacts2-tab" data-toggle="tab" href="#softfacts2" role="tab" aria-controls="softfacts2" aria-selected="false">Weitere Informationen</a>
+                        </li>
+                      </ul>
+                    </div>
+
+                    <div class="col-md-9">
+                        <div class="tab-content" id="myTabContent">
+
+                          <div class="tab-pane fade show active" id="Beschreibung2" role="tabpanel" aria-labelledby="Beschreibung2-tab">
+                            <div class="card">
+                              <h5 class="card-header">Projekt-Übersicht</h5>
+                              <div class="card-body">
+                              <h4>Beschreibung</h4><hr>
+                              <p>Smart Tea ist ein Tee-Vollautomat mit künstlicher Intelligenz, mit deren Hilfe die optimale Tee-Dosierung, Ziehzeit und Wassertemperatur automatisch an die Präferenz der Nutzer angepasst wird. Smart Tea kann ohne größeren Aufwand an das Wassernetz angeschlossen werden, wodurch das manuelle Nachfüllen des Wasserbehälters überflüssig wird.</p>
+                              <br>
+                              <h4>Anfangsinvestition</h4><hr>
+                              <p>Die Konzeption des Smart Tea Prototyps kostet 0,6 Mio. Lira.</p>
+                              <p>Die weiteren Kosten für den Entwicklungsprozess liegen bei 2,4 Mio. Lira.</p>
+                                <p>Zusätzlich wird eine Software benötigt, die intern in der Abteilung Smart Kitchen programmiert wird. Die Programmierung wird 1 Mio. Lira kosten.</p>
+                              <br>
+                              <h4>Finanzen</h4><hr>
+                              <p>Unter Berücksichtigung aller relevanten Infos wurden folgende Werte berechnet:</p>
+                              <table class="table table-striped">
+                                <thead style="text-align: center;">
+                                  <tr>
+                                    <th scope="col"></th>
+                                    <th scope="col">Smart Tea</th>
+                                  </tr>
+                                </thead>
+                                <tr>
+                                  <th scope="row" style="width: 50%;">Benötigte Anfangsinvestition</th>
+                                  <td style="text-align: center;">4 Mio. Lira</td>
+                                </tr>
+                                <tr>
+                                  <th scope="row">Erwartete diskontierte Einzahlungsüberschüsse aus den Rückflüssen der Investition</th>
+                                  <td style="text-align: center; width: 35%;">8,5 Mio. Lira</td>
+                                </tr>
+                              </table>
+                              </div>
+                          </div>
+                        </div>
+
+                        <div class="tab-pane fade" id="softfacts2" role="tabpanel" aria-labelledby="softfacts2-tab">
+                          <div class="card">
+                            <h5 class="card-header">Weitere Informationen</h5>
+                            <div class="card-body">
+                                <p>Primärer Absatzmarkt: Mitteleuropa</p><hr>
+                                <p>Zurzeit gibt es keinen ernstzunehmenden Wettbewerb im Bereich Smart Teamaker. Eine Marktanalyse gibt auch keine Hinweise darauf, dass ein Wettbewerber die Entwicklung eines Smart Teamakers plant.</p><hr>
+                                <p>Das Marktpotenzial im Teemarkt ist niedriger als im Kaffeeemarkt aufgrund der allgemein höheren Popularität von Kaffeeprodukten.<br>Allerdings ist der Teekonsum die letzten Jahre deutlich gestiegen, u.a. aufgrund des gestiegenem Gesundheitsbewusstseins der Europäer.</p><hr>
+                                <p>Die Zahlungsbereitschaft der Kunden im Teemarkt ist höher als die der Kunden im Kaffeemarkt.</p><hr>
+                                <p>Für den Verkauf von Smart Tea können höchstwahrscheinlich bestehende Synergien mit dem primären Vertriebspartner von Kitchen World genutzt werden.</p>
+                            </div>
+                          </div>
+                        </div>
+                        
+                      </div>
+                    </div>
+                    
+                  </div>
+                  <!-- end -->
+                {% endif %}
+
+              </div>
+
+              <div class="modal-footer">
+                <button type="button" class="btn btn-default mr-auto" data-dismiss="modal">Schließen</button>
+              </div>
+
+          </div>
+      </div>
+</div>
+
+    <!-- instructions -->
+    <div class="modal fade" id="instructions" tabindex="-1" role="dialog" aria-labelledby="instructionsLabel" aria-hidden="true">
+      <div class="modal-dialog modalw">
+          <div class="modal-content">
+
+              <div class="modal-header">
+                   <h4 class="modal-title" id="instructionsLabel">Experimentanleitung</h4>
+              </div>
+
+              <div class="modal-body">
+                <!-- see _templates/global/Instructions.html -->
+                {% include "global/InstructionsTemplate.html" %}
+              </div>
+
+              <div class="modal-footer">
+                <button type="button" class="btn btn-default mr-auto" data-dismiss="modal">Schließen</button>
+              </div>
+
+          </div>
+      </div>
+    </div>
+
+    <!-- calc -->
+    <div class="modal fade" id="calc" tabindex="-1" role="dialog" aria-labelledby="calcLabel" aria-hidden="true">
+      <div class="modal-dialog modalcalculator">
+          <div class="modal-content">
+
+              <div class="modal-header">
+                   <h4 class="modal-title" id="calcLabel">Taschenrechner</h4>
+              </div>
+
+              <div class="modal-body">
+                <div class="calculator" style="text-align: center;">
+                  <div class="inputcalc" id="inputcalc"></div>
+                  <div class="buttons">
+                    <div class="operators">
+                      <div>+</div>
+                      <div>-</div>
+                      <div>&times;</div>
+                      <div>&divide;</div>
+                    </div>
+                    <div class="leftPanel">
+                      <div class="numbers">
+                        <div>7</div>
+                        <div>8</div>
+                        <div>9</div>
+                      </div>
+                      <div class="numbers">
+                        <div>4</div>
+                        <div>5</div>
+                        <div>6</div>
+                      </div>
+                      <div class="numbers">
+                        <div>1</div>
+                        <div>2</div>
+                        <div>3</div>
+                      </div>
+                      <div class="numbers">
+                        <div>0</div>
+                        <div>.</div>
+                        <div id="clear">C</div>
+                      </div>
+                    </div>
+                    <div class="equal" id="result">=</div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="modal-footer">
+                <button type="button" class="btn btn-default mr-auto" data-dismiss="modal">Schließen</button>
+              </div>
+
+          </div>
+      </div>
+    </div>
+
+{% block global_scripts  %}
+  <script src="{% static 'orbit/calc.js' %}"></script>
+{% endblock %}
+
+{% endblock %}
+
+

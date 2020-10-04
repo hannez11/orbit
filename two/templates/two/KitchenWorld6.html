@@ -1,0 +1,503 @@
+<style>
+/* adjusts height of three boxes at the top */
+.card-deck .card-body {
+    padding: 0.6rem;
+    vertical-align: middle;
+}
+
+/* slider bar */
+#slider {
+  -webkit-appearance: none;
+  width: 100%;
+  height: 10px;
+  border-radius: 5px;
+  background: #007bff;
+  outline: none;
+  opacity: 0.8;
+  -webkit-transition: .2s;
+  transition: opacity .2s;
+  margin-top: 1%;
+}
+
+#slider:hover {
+  opacity: 1;
+}
+
+/* chrome */
+.sliderhiddenchrome::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 10px;
+  height: 20px;
+  border-radius: 25%;
+  background: #4CAF50;
+  cursor: pointer;
+  opacity: 0;
+}
+
+.slidershownchrome::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 15px;
+  height: 25px;
+  border-radius: 25%;
+  border: 2px solid #000000;
+  background: #ffffff;
+  cursor: pointer;
+  opacity: 1;
+}
+
+/* firefox */
+.sliderhidden::-moz-range-thumb {
+  width: 10px;
+  height: 20px;
+  border-radius: 50%;
+  background: #4CAF50;
+  cursor: pointer;
+  opacity: 0;
+}
+
+.slidershown::-moz-range-thumb {
+  width: 10px;
+  height: 20px;
+  border-radius: 25%;
+  border: 2px solid #000000;
+  background: #ffffff;
+  cursor: pointer;
+  opacity: 1;
+}
+
+/* .modal-lg {
+    max-width: 50% !important;
+} */
+</style>
+
+{% extends "global/Page.html" %}
+{% load otree static %}
+
+{% block head_title %}
+Experiment Orbit
+{% endblock %}
+
+{% block title %}
+   
+{% endblock %}
+
+{% block scripts %}
+
+<script src="{% static 'back_button_v1/js/prev_next_button.js' %}"></script>
+
+{% endblock %}
+
+
+{% block styles %}
+
+<link href="{% static 'back_button_v1/css/custom.css' %}" rel="stylesheet">
+
+{% endblock %}
+
+
+{% block content %}
+
+<!-- Tab navigation -->
+<!-- second tab is active tab on this page -->
+<ul class="nav nav-tabs   fixed-top navbar-light bg-light justify-content-center" id="myTab" role="tablist">
+  
+  <li class="nav-item">
+    <a class="nav-link topnav" id="part1-tab" data-toggle="tab" href="#part1" role="tab" aria-controls="part1" onclick="topFunction(); timerReport()">Update 30.06</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link topnav active" id="part3-tab" data-toggle="tab" href="#part3" role="tab" aria-controls="part3" onclick="topFunction(); timerRecommendation()">Empfehlung</a> 
+  </li>
+
+</ul>
+<br>
+<br>
+
+
+<!-- Tab content -->
+<div class="tab-content" id="myTabContent">
+
+<!-- First Page -->
+<div class="tab-pane toppane" id="part1" role="tabpanel" aria-labelledby="part1-tab">
+
+
+
+<!-- start -->
+<div class="container">
+
+  <div class="container">
+    <div class="row">
+
+      <div class="col-sm">
+        <h3>Projekt Smart {{ player.initial_decision }}</h3>
+        <h4>Update 30.06.2021</h4>
+      </div>
+
+      <div class="col-sm">
+        <img src="{% static "orbit/kw.png" %}" style="float:right">
+      </div>
+
+    </div>
+  </div>
+
+    <hr>
+  
+    <div class="card-deck" style="text-align: center;">
+
+        <div class="card">
+          <div class="card-header">
+            Datum Projektstart
+          </div>
+          <div class="card-body">
+            <p class="card-text" style="text-align: center;">30 Juni 2020</p>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            Projektverantwortlicher
+          </div>
+          <div class="card-body">
+            <p class="card-text" style="text-align: center;">Leitender Manager <br>Abteilung „Projekte“</p>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            Guthaben Projektkonto
+          </div>
+          <div class="card-body">
+            <p class="card-text" style="text-align: center; text-underline-offset: 6px; font-weight: 510">
+              <span style="text-decoration: underline; text-decoration-color: #d3d3d3;">Projektstart (2020): 7,5 Mio. Lira</span> <br>
+              Aktuell (2021): 3,5 Mio. Lira
+            </p>
+          </div>
+        </div>
+
+    </div>
+  <hr>
+
+  <div class="row">
+    <div class="col-md-3">
+      <ul class="nav nav-pills flex-column" id="myTab" role="tablist">
+        <li class="nav-item">
+          <a class="nav-link" aria-selected="false"><b>Smart {{ player.initial_decision }}</b></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" id="Zwischenbericht-tab" data-toggle="tab" href="#Zwischenbericht" role="tab" aria-controls="Zwischenbericht" aria-selected="true">Zwischenbericht</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" id="softfacts-tab" data-toggle="tab" href="#softfacts" role="tab" aria-controls="softfacts" aria-selected="false" onclick="">Aktualisierte Infos</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" id="Szenarioanalyse-tab" data-toggle="tab" href="#Szenarioanalyse" role="tab" aria-controls="Szenarioanalyse" aria-selected="false" onclick="">Szenarioanalyse</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" id="Alternative-tab" data-toggle="tab" href="#Alternative" role="tab" aria-controls="Alternative" aria-selected="false" onclick="">Alternatives Investment</a>
+        </li>
+      </ul>
+  </div>
+
+  <div class="col-md-9">
+      <div class="tab-content" id="myTabContent">
+
+        <div class="tab-pane fade show active" id="Zwischenbericht" role="tabpanel" aria-labelledby="Zwischenbericht-tab">
+          <div class="card">
+            <h5 class="card-header">Zwischenbericht</h5>
+            <div class="card-body">
+              <p>Der Entwicklungsprozess Ihres Projekts Smart {{ player.initial_decision }} lief bisher weitestgehend reibungslos. Die Anfangsinvestition in Höhe von 4 Mio. Lira (inklusive der 1 Mio. Lira für die interne Softwareentwicklung) wurde bereits ausgegeben.</p><hr>
+              <p>Jedoch hat sich herausgestellt, dass die Expertise im Bereich künstliche Intelligenz nicht ausreichend ist, um die Software unternehmensintern zu programmieren. Um das Projekt abzuschließen müsste deswegen für 3,5 Mio. Lira eine zusätzliche Software eingekauft werden („<i>Zusatzinvestition</i>“).</p><hr>
+              <p>Außerdem hat die Marketingabteilung festgestellt, dass ein wichtiger Wettbewerber ebenfalls einen Smart {{ player.initial_decision }}maker entwickelt, der sich aktuell in der Testphase - also kurz vor Markteinführung - befindet, was mit hoher Wahrscheinlichkeit negative Konsequenzen auf Ihren Marktanteil haben wird.</p>
+            </div>
+        </div>
+      </div>
+
+      <div class="tab-pane fade" id="softfacts" role="tabpanel" aria-labelledby="softfacts-tab">
+        <div class="card">
+          <h5 class="card-header">Aktualisierte Projekt-Informationen</h5>
+          <div class="card-body">
+              {% if player.initial_decision == "Coffee" %}
+
+              <p>Eine neue Marktumfrage zeigt, dass nun noch mehr Kaffeekonsumenten als zuvor Interesse an einem Smart Coffeemaker haben.</p><hr>
+              <p>Zurzeit besteht große Unsicherheit, ob die Kooperation mit dem primären Vertriebspartner von Kitchen World für den Verkauf von Smart Coffee genutzt werden kann.</p><hr>
+              <p>Bisherige Produkte des Wettbewerbers hatten generell eine niedrigere Qualität als Produkte von Kitchen World.</p>
+
+              {% else %}
+              <p>Eine neue Marktumfrage zeigt, dass nun noch mehr Teekonsumenten als zuvor Interesse an einem Smart Teamaker haben.</p><hr>
+              <p>Zurzeit besteht große Unsicherheit, ob die Kooperation mit dem primären Vertriebspartner von Kitchen World für den Verkauf von Smart Tea genutzt werden kann.</p><hr>
+              <p>Bisherige Produkte des Wettbewerbers hatten generell eine niedrigere Qualität als Produkte von Kitchen World.</p>
+
+              {% endif %}
+          </div>
+        </div>
+      </div>
+
+        <div class="tab-pane fade" id="Szenarioanalyse" role="tabpanel" aria-labelledby="Szenarioanalyse-tab">
+          <div class="card">
+            <h5 class="card-header">Szenarioanalyse Smart {{ player.initial_decision }}</h5>
+            <div class="card-body">
+              <p>Aufgrund der geänderten Umstände liegt die Eintrittswahrscheinlichkeit eines Best-Case Szenarios bei 33% und eines Worst-Case Szenarios bei 67%.</p>
+              <p>Unter Berücksichtigung aller relevanten Infos wurden folgende Werte für die beiden Szenarien berechnet:</p>
+
+              <table class="table table-striped">
+                <thead style="text-align: center;">
+                  <tr>
+                    <th scope="col"></th>
+                    <th scope="col"style="text-align: center; width:45%">Smart {{ player.initial_decision }}</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <th scope="row">Getätigte Anfangsinvestition</th>
+                    <td style="text-align: center;">4 Mio. Lira</td> 
+                  </tr>
+                </tbody>
+              </table>
+
+              <table class="table table-striped">
+                <thead style="text-align: center;">
+                  <tr>
+                    <th scope="col"></th>
+                    <th scope="col">Best-Case Szenario</th>
+                    <th scope="col">Worst-Case Szenario</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <th scope="row">Eintrittswahrscheinlichkeit</th>
+                    <td style="text-align: center;">33%</td>
+                    <td style="text-align: center;">67%</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Benötigte Zusatzinvestition</th>
+                    <td style="text-align: center;">3,5 Mio. Lira</td>
+                    <td style="text-align: center;">3,5 Mio. Lira</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Erwartete diskontierte Einzahlungsüberschüsse</th>
+                    <td style="text-align: center; vertical-align:middle">9,5 Mio. Lira</td>
+                    <td style="text-align: center; vertical-align:middle">4,5 Mio. Lira</td>
+                  </tr>
+                  <tr height = 20px></tr>
+                  <tr>
+                    <th scope="row">Erwartete Differenz zum<br>ursprünglichen Projektguthaben</th>
+                    <td style="text-align: center;font-weight: 600; vertical-align:middle">+2,0 Mio. Lira</td>
+                    <td style="text-align: center;font-weight: 600; vertical-align:middle">-3,0 Mio. Lira</td>
+                  </tr>
+                </tbody>
+              </table>
+
+            </div>
+          </div>
+        </div>
+        
+        <div class="tab-pane fade fade" id="Alternative" role="tabpanel" aria-labelledby="Alternative-tab">
+          <div class="card">
+            <h5 class="card-header">Alternatives Investment</h5>
+              <div class="card-body">
+              <p>Obwohl Sie bereits 4 Mio. Lira in Ihr Projekt Smart {{ player.initial_decision }} investiert haben, besteht die Möglichkeit das Projekt Smart {{ player.initial_decision }} abzubrechen.</p>
+              <p>Falls Sie Ihr Projekt abbrechen, könnten die verbleibenden 3,5 Mio. Lira des Projektkontos - welche bei Projektfortsetzung für die externe Softwareprogrammierung gezahlt werden müssen - in ein alternatives Projekt investiert werden.</p>
+              <table class="table table-striped">
+                <thead style="text-align: center;">
+                  <tr>
+                    <th scope="col"></th>
+                    <th scope="col">Alternatives Investment</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <th scope="row" style="width: 60%;">Benötigte Anfangsinvestition</th>
+                    <td style="text-align: center;">3,5 Mio. Lira</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Erwartete diskontierte Einzahlungsüberschüsse aus den Rückflüssen der Investition</th>
+                    <td style="text-align: center;">7,0 Mio. Lira</td>
+                  </tr>
+                </tbody>
+              </table>
+              <br>
+              <table class="table table-striped">
+                <tr>
+                  <td style="font-weight: bold; width: 60%">Erwartete Differenz zum<br>ursprünglichen Projektguthaben</td>
+                  <td style="text-align: center;font-weight: 600; vertical-align:middle">-0,5 Mio. Lira</td>
+                </tr>
+              </table>
+            </div>
+          </div>
+        </div>
+
+    </div>
+  </div>
+
+  </div>
+</div>
+<button type="button" id="nextbutton1" class="nexttab btn-primary btn next" onclick="topFunction(); timerRecommendation()">Weiter zur Empfehlung</button>
+<!-- end -->
+
+
+</div>
+
+
+<!-- Third Page -->
+  <div class="tab-pane toppane show active" id="part3" role="tabpanel" aria-labelledby="part3-tab">
+    
+    <div class="container">
+      <div class="row">
+    
+        <div class="col-sm">
+          <h3>Projekt Smart {{ player.initial_decision }}</h3>
+          <h4>Update 30.06.2021</h4>
+        </div>
+    
+        <div class="col-sm">
+          <img src="{% static "orbit/kw.png" %}" style="float:right">
+        </div>
+    
+      </div>
+    </div>
+    <hr>
+    
+    <div class="card">
+      <div class="card-header">
+        <b>Empfehlung an die Geschäftsführung</b>
+      </div>
+      <div class="card-body">
+        <div style="text-align: left;">
+          <p>Die Geschäftsführung möchte nun von Ihnen wissen, wie sehr Sie empfehlen, das von Ihnen gestartete Projekt Smart {{ player.initial_decision }} fortzusetzen.</p>
+          <p>Der von Ihnen angegebene Wert entspricht der Wahrscheinlichkeit, dass die Geschäftsführung Ihre Empfehlung umsetzt. <br> Gehen Sie davon aus, dass sich die Geschäftsführung an Ihre Empfehlung hält.</p>
+          <br>
+          <p>Um Ihre Empfehlung abzugeben, klicken Sie bitte auf den Balken und verschieben Sie den Regler an die gewünschte Stelle:</p>
+        </div>
+        
+        <div class="alert" role="alert" style="background-color:#f7f7f7; border: 1px solid rgb(90, 90, 90);">
+    
+          <p id="inputdisplay" style="text-align: center">Ich empfehle der Geschäftsführung zu .. das Projekt Smart {{ player.initial_decision }} fortzuführen!</p>
+          <hr>
+          <div class="slidecontainer" style="text-align: center">
+            <div class="row">
+              <div class="col" style="padding: 0;">
+                <p style="text-align: right">0%</p>
+              </div>
+              <div class="col-9">
+                <input type="range" min="0" max="100" value="50" id="slider" name="sub_decision" class="sliderhidden sliderhiddenchrome">
+              </div>
+              <div class="col" style="padding: 0;">
+                <p style="text-align: left">100%</p>
+              </div>
+            </div>
+          </div>
+    
+          <div class="sliderlabels" style="text-align: center; font-style: italic">
+            <div class="row">
+              <div class="col-sm">
+                <p style="text-align: left; font-size: 0.93rem;">Mein Projekt Smart {{ player.initial_decision }} abbrechen <br> und ins Alternativprojekt investieren</p>
+              </div>
+              <div class="col-sm">
+                <p style="text-align: right; font-size: 0.93rem;">Mein Projekt Smart {{ player.initial_decision }} fortführen und <br> nicht ins Alternativprojekt investieren</p>
+              </div>
+            </div>
+          </div>
+          
+        </div>
+        
+        <hr>
+        <div class="alert alert-primary" role="alert" id="selection" style="text-align: center;">
+          Die Geschäftsführung wird zu <i>..</i> Ihr Projekt Smart {{ player.initial_decision }} fortführen und zu <i>..</i> abbrechen. 
+        </div>
+
+      </div>
+    </div>
+    
+
+<button onclick="topFunction(); timerReport()" type="button" class="prevtab btn-light btn back" style="background-color: #f8f9fa; border-color: #8b8b8b">Zurück zum Update</button>
+<button type="button" class="nexttab btn-primary btn next" id="nextbutton" data-toggle="tooltip" title="Wählen Sie bitte Ihren Wert aus, indem Sie auf den Regler klicken">Empfehlung abgeben</button>
+
+  </div>
+
+
+</div>
+
+<br><br>
+<!-- footerbar with instructions and calculator modals -->
+{% include "global/FooterContentWithInitial.html" %}
+
+</body>
+
+<!-- hidden field to store all slider inputs -->
+<input type="hidden" name="slider_inputs" id="slider_inputs">
+
+<!-- hidden field to store time spent on page in seconds -->
+<input type="hidden" name="timer_subdecision" id="timer_subdecision" value=0>
+
+<script>
+
+  // subdecision scripts
+  // jquery to show initially hidden slider knob/thumb after slider is clicked once
+  $("#slider").on('touchstart click', function() { //click = mouseclick ; touchstart for mobile devices
+    $(this).removeClass('sliderhidden').removeClass('sliderhiddenchrome').addClass('slidershown').addClass('slidershownchrome');
+  })
+
+  $("#slider").on("input", function(){ // function is executed when slider is moved
+    let val = $(this).val(); // refers to slider
+    $("#inputdisplay").html(`Ich empfehle der Geschäftsführung zu <b>${val}</b>% das Projekt Smart {{ player.initial_decision }} fortzuführen!`); // displays current slider value
+    $('#selection').html(`Die Geschäftsführung wird zu <i>${val}%</i> Ihr Projekt Smart {{ player.initial_decision }} fortführen und zu <i>${100-val}%</i> abbrechen.`);
+  })
+
+  let slider_inputs = [] // records all inputs after mouse-release
+
+  $("#slider").mouseup( function(){ // function is executed when slider is moved and leftmousebtn is released
+    let val = $(this).val(); // refers to slider
+    slider_inputs.push(val); // pushes current selection to array
+    $("#slider_inputs").val(slider_inputs); // stores array in hidden field
+  })
+
+  $("#slider").on("touchend", function(){ // function is executed when finger is removed from touchscreen
+    let val = $(this).val(); // refers to slider
+    slider_inputs.push(val); // pushes current selection to array
+    $("#slider_inputs").val(slider_inputs); // stores array in hidden field
+  })
+
+  var sec = 0; // global variable
+  let timer = [] // first value equals time spent on recommendation tab before report tab is opened
+
+  function timerReport() {
+    timer.push("Report tab clicked at " + sec);
+  }
+  
+  function timerRecommendation() {
+    timer.push("Recommendation tab clicked at " + sec);
+  }
+
+  // increasing timer
+  function pad ( val ) { return val > 9 ? val : "0" + val; }
+  setInterval( function(){
+      $("#seconds").html(pad(++sec)); // executes function. however no field with id #seconds on this page
+      // $("#timer_subdecision").val(sec); // store seconds spent on page in hidden field
+      if ($("#slider").hasClass("slidershown") || $("#slider").hasClass("slidershownchrome")) { // participant only can advance if slider input was made
+        $('#nextbutton').removeAttr("type"); // removes type attribute from next button so form can be submitted
+        $('#nextbutton').removeAttr('data-original-title'); // removes tooltip
+      }
+  }, 1000);
+
+  $('#nextbutton').click(function() { // execute function if next is clicked
+    if ($('#nextbutton').attr("type") !== "button") { // function is executed if next can be clicked
+      timer.push("total " + sec); // push total secs to array
+      $("#timer_subdecision").val(timer); // store array in hidden field
+    }
+  });
+
+  $(document).ready(function(){
+    $('[data-toggle="tooltip"]').tooltip();   
+  });
+
+  $(document).ready(function(){
+    $(window).scrollTop(0);
+  });
+
+</script>
+
+{% endblock %}
+
+
+

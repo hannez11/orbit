@@ -1,0 +1,60 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+
+{% block head_title %}
+Experiment Orbit
+{% endblock %}
+
+{% block title %}
+
+{% endblock %}
+
+{% block content %}
+
+<div class="card bg-light m-3">
+  <div class="card-body">
+      <p>Bitte tragen Sie hier den selbst-generierten Code ein, damit Ihnen die Vergütung der Lotterie-Aufgabe zugeordnet werden kann.
+      <b>Dabei handelt es sich um den gleichen Code, den Sie damals bei der Anmeldung angegeben haben.</b></p>
+      <p>Falls Sie sich den Code aufgeschrieben haben, dann können Sie den Code einfach übertragen.  
+      <br>Ansonsten generieren Sie den Code bitte mit folgenden Infos:</p>
+      <ul>
+          <li>Die letzte Ziffer Ihrer Handynummer (0171 2345123 = 3)</li>
+          <li>Die ersten zwei Buchstaben vom Vornamen Ihrer Mutter (bspw. Erika = Er)</li>
+          <li>Die ersten zwei Buchstaben vom Vornamen Ihres Vaters (bspw. Max = Ma)</li>
+          <li>Die ersten zwei Buchstaben von Ihrem Geburtsort (bspw. Gießen = Gi)</li>
+          <li>Ihren Geburtsmonat als Zahl (Januar = 01)</li>
+          <li>Anhand der Beispielangaben wäre der Code <i>3ErMaGi01</i></li>
+      </ul>
+      {% formfield player.participant_code label="Selbst-generierter Teilnehmercode:" %}
+  </div>
+</div>
+
+<div style="text-align: right">
+<button type="button" class="nexttab btn-primary btn next" id="nextbutton" data-toggle="tooltip" title="Der Code muss 8 Zeichen haben!">Weiter zur Vergütung</button>
+</div>
+
+<script>
+
+// increasing timer
+let sec = 0;
+function pad ( val ) { return val > 9 ? val : "0" + val; }
+  setInterval( function(){
+    $("#seconds").html(pad(++sec)); // executes function. however no field with id #seconds on this page
+    if ($("#id_participant_code").val().length == 9) { // participant only can advance if code has length 9
+      $('#nextbutton').removeAttr("type"); // removes type attribute from next button so form can be submitted
+      $('#nextbutton').removeAttr('data-original-title'); // removes tooltip
+    } else if ($("#id_participant_code").val().length != 9) {
+      $('#nextbutton').attr("type", "button"); // adds type attribute from next button so form can be submitted
+      $('#nextbutton').attr('data-original-title', "Der Code muss 9 Zeichen haben!"); // adds tooltip
+    }
+}, 700); 
+
+$(document).ready(function(){
+  $('[data-toggle="tooltip"]').tooltip();   
+});
+
+</script>
+
+   
+
+{% endblock %}

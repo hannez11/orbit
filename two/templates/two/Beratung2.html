@@ -1,0 +1,75 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+
+{% block head_title %}
+Experiment Orbit
+{% endblock %}
+
+{% block title %}
+
+{% endblock %}
+
+{% block content %}
+
+<div class="card">
+  <div class="card-header">
+      Im Folgenden erhalten Sie die Analyse der Unternehmensberatung: 
+  </div>
+  <div class="card-body">
+      <div class="alert alert-info" role="alert">
+          <i>
+          <p>Sehr geehrte Projektleitung,</p>
+          <p>Sie verantworten seit letztem Jahr das Projekt Smart {{ player.initial_decision }}, dessen Bericht unser Team ausführlich auf Schwachstellen untersucht hat.</p>
+          <p>Dabei konnten wir <b>zwei besonders kritische Schwachstellen an Ihrem Projekt</b> identifizieren, die letztendlich <b>zum Scheitern Ihres Projekts Smart {{ player.initial_decision }}</b> führen könnten:</p>
+          <ol>
+            <li><p>In der ursprünglichen Erfolgskalkulation (vor Projektstart) wurde von keinem ernstzunehmenden Wettbewerber ausgegangen. Allerdings ist mittlerweile mit einem Wettbewerber zu rechnen, der den Marktanteil Ihres Projekts mit hoher Wahrscheinlichkeit reduzieren wird.</p></li>
+            <li><p>Aktuell besteht hohe Unsicherheit, ob die Kooperation mit dem primären Vertriebspartner von Kitchen World für den Verkauf von Smart {{ player.initial_decision }} genutzt werden kann. Falls die Kooperation scheitert, dann fallen bestehende Synergien weg, die in der ursprünglichen Erfolgskalkulation (vor Projektstart) enthalten waren.</p></li>
+          </ol>
+          </i>
+          <br>
+          <div class="container">
+            <div class="row">
+              
+              <div class="col-sm">
+                <img src="{% static "orbit/signature.png" %}" style="max-width: 11%;">
+                <br>_____________________________<img src="{% static "orbit/consulting.png" %}" style="float:right; max-width: 12%;">
+                <br><i>Senior Consultant</i> 
+              </div>
+                  
+              </div>
+            </div>
+        </div>
+  </div>
+</div>
+
+<br>
+<div style="text-align:right">
+  <button id="nextbutton" class="btn btn-primary" data-toggle="tooltip" title="Bitte lesen Sie sich die Informationen gründlich durch">Weiter zur Empfehlung</button>
+</div>
+
+<!-- hidden field to store time spent on page in seconds -->
+<input type="hidden" name="timer_DA2" id="timer_DA2" value=0>
+
+
+<script>
+
+$(document).ready(function(){
+  $('[data-toggle="tooltip"]').tooltip();   
+});
+
+var sec = 0; // global variable
+
+// increasing timer
+function pad ( val ) { return val > 9 ? val : "0" + val; }
+setInterval( function(){
+    $("#seconds").html(pad(++sec));
+    $("#timer_DA2").val(sec); // store seconds spent on page in hidden field
+    if (sec >15) { 
+        // $('#nextbutton').removeAttr("type"); // removes type attribute from next button so form can be submitted
+        $('#nextbutton').removeAttr('data-original-title'); // removes tooltip
+    }
+}, 1000);
+
+</script>
+
+{% endblock %}

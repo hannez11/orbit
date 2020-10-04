@@ -1,0 +1,33 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+
+{% block head_title %}
+Experiment Orbit
+{% endblock %}
+
+{% block title %}
+
+{% endblock %}
+
+{% block content %}
+
+<div class="card bg-light m-3">
+    <div class="card-body">
+        <p>Sie haben das Quiz <span style="font-weight: 505;">abgeschlossen</span>.</p><hr>
+        <p>Als leitender Manager der Abteilung Projekte erhalten Sie auf der nächsten Seite detaillierte Informationen zu zwei Projektideen. 
+        <p>Bei den Projekten handelt es sich um einen Smart-Kaffeevollautomaten („Smart Coffee“) bzw. einen Smart-Teevollautomaten („Smart Tea“). 
+        Beide Projekte basieren weitestgehend auf der gleichen Technologie.</p> 
+        <p>Aufgrund beschränkter Personalressourcen kann allerdings nur eine der beiden Projektideen umgesetzt werden.</p>
+
+        <p>Nachdem Sie die Projektideen gelesen haben, müssen Sie sich entscheiden, welches der beiden Innovationsprojekte Sie starten möchten.</p>
+    </div>
+</div>
+
+<div style="text-align:right">
+    <button class="btn btn-primary btn-md">Weiter zu den Projektideen</button>
+</div>
+
+<!-- footerbar with instructions and calculator modals -->
+{% include "global/FooterContent.html" %}
+
+{% endblock %}

@@ -1,0 +1,179 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+
+{% block head_title %}
+Experiment Orbit
+{% endblock %}
+
+{% block title %}
+   
+{% endblock %}
+
+{% block scripts %}
+
+<script src="{% static 'back_button_v1/js/prev_next_button.js' %}"></script>
+
+{% endblock %}
+
+
+{% block styles %}
+
+<link href="{% static 'back_button_v1/css/custom.css' %}" rel="stylesheet">
+
+{% endblock %}
+
+
+{% block content %}
+
+<!-- Tab navigation -->
+<ul class="nav nav-tabs   fixed-top navbar-light bg-light justify-content-center" id="myTab" role="tablist">
+  
+  <li class="nav-item">
+    <a class="nav-link topnav active" id="part1-tab" data-toggle="tab" href="#part1" role="tab" aria-controls="part1" onclick="topFunction()">Anleitung</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link topnav" id="part3-tab" data-toggle="tab" href="#part3" role="tab" aria-controls="part3" onclick="topFunction()">Lotterie</a>
+  </li>
+
+</ul>
+<br>
+<br>
+
+
+<!-- Tab content -->
+<div class="tab-content" id="myTabContent">
+
+<!-- First Page -->
+  <div class="tab-pane toppane show active" id="part1" role="tabpanel" aria-labelledby="part1-tab">
+
+
+<!-- <div class="card-header bg-transparent mainheader" >
+ <h3 class="card-title font-weight-bold mt-3 mb-3">Anleitung</h3>
+  </div>
+<br> -->
+
+<div class="card bg-light m-3">
+  <div class="card-body">
+  <p>
+    <b>Im Folgenden erhalten Sie eine kurze Lotterie-Aufgabe, die <u>unabhängig</u> vom zweiten Teil des Experiments ist. Ihre Beantwortung der Lotterie-Aufgabe hat entsprechend keinen Einfluss auf den zweiten Teil vom Experiment.</b>
+  </p>
+
+  <p>
+    In der Lotterie-Aufgabe entscheiden Sie für 15 Szenarien, ob Sie eine sichere Auszahlung wünschen oder an einer Lotterie teilnehmen möchten.<br>
+    Genauer gesagt, wählen Sie bitte <u>ab</u> welchem Szenario Sie von der Lotterieteilnahme zur sicheren Alternative wechseln möchten. Auf der Lotterie-Seite erhalten Sie eine detaillierte Erklärung, wie Ihre Auswahl zu interpretieren ist.<br>
+    <br>Diese Aufgabe ist ein Bestandteil Ihrer Vergütung im Experiment.
+  </p>
+
+  <p>
+    <b>Ablauf der Lotterie-Aufgabe:</b>
+    <ol>
+      <li>Sie wählen in der Tabelle aus, ab welchem Szenario Sie von der Lotterie zur sicheren Auszahlung wechseln möchten.</li>
+      <li>Ganz am Ende vom Experiment wird zufällig eins der 15 Szenarien gelost.</li>
+      <li>Falls Sie sich bei dem Szenario für die Lotterieteilnahme entschieden haben, dann wird mit der in der Tabelle angegeben Wahrscheinlichkeit ausgelost, ob Sie die Lotterie gewonnen (1,50€) oder verloren (0€) haben.</li>
+      <li>Falls Sie sich bei dem Szenario für die sichere Auszahlung entschieden haben, dann erhalten Sie 0,75€ für die Lotterie-Aufgabe.</li>
+      <li>Ganz am Ende vom Experiment erhalten Sie eine detaillierte Übersicht über Ihre Vergütung.</li>
+    </ol>
+  </p>
+
+  <p>
+    Bitte wählen Sie nun in der Lotterie, ab welchem Szenario Sie von der Lotterieteilnahme zur sicheren Alternative wechseln möchten. Sie können sich bei Bedarf diese Anleitung erneut anschauen (oben in der Navigationsbar auf Anleitung).
+  </p>
+
+  </div>
+</div>
+
+
+
+<button onclick="topFunction()" type="button" class="nexttab btn-primary btn next">Weiter zur Lotterie</button>
+  </div>
+
+
+
+<!-- Third Page -->
+<div class="tab-pane toppane" id="part3" role="tabpanel" aria-labelledby="part3-tab">
+ 
+
+  <!-- <div class="card-header bg-transparent mainheader" >
+   <h3 class="card-title font-weight-bold mt-3 mb-3"> Aufgabe </h3>
+    </div>
+  <br> -->
+
+<div class="card bg-light m-3" id="tableinfo">
+  <div class="card-body">
+  Bitte wählen Sie in der Tabelle, ab welchem Szenario Sie von der Lotterie zur sicheren Auszahlung wechseln möchten. <br><br>
+  Nachdem Sie eine Auswahl getroffen haben, sehen Sie unter der Tabelle, wie Ihre Auswahl zu interpretieren ist. <br>
+  </div>
+</div>
+
+<table class="table table-striped table-hover table-sm" style="text-align:center;">
+  <colgroup>
+      <col width="35%">
+      <col width="25%">
+      <col width="40%">
+  </colgroup>
+  <thead> <tr> 
+      <th scope="col" style="text-align: center; vertical-align: middle;"> Sichere Auszahlung</th> 
+      <th scope="col" style="text-align: center; vertical-align: middle;"> Ich möchte ab folgendem Szenario zur sicheren Auszahlung wechseln:</th> 
+      <th scope="col" style="text-align: center; vertical-align: middle;"> Lotterie</th> 
+  </tr> </thead>
+  <tbody style="font-size: 90%;">
+              {% for successrate, failurerate, lottery_choice_field in data %}
+              <tr>
+                  <td>{{ Constants.lottery_payout.0 }}</td>
+                  <td>
+                      <label for="id_lottery_choice_{{ forloop.counter }}">
+                          <input id="{{ lottery_choice_field }}" type="radio" name="lottery_choice" value="{{ forloop.counter }}" required="" class="form-check-input">Szenario {{ forloop.counter }}
+                      </label>
+                  </td>
+                  <td>{{ Constants.lottery_payout.1 }} (zu {{ successrate }}%) oder {{ Constants.lottery_payout.2 }} (zu {{ failurerate }}%)</td>
+              </tr>
+              {% endfor %}
+  </tbody>
+</table>
+
+<hr>
+<div class="alert alert-primary" role="alert">
+  <div id="selectedscenario"></div>
+</div>
+
+<p style="font-style: italic;">Auf der nächsten Seite erhalten Sie abschließend 9 kurze Fragen zu Ihrer Person.</p>
+
+<button onclick="topFunction()" type="button" class="prevtab btn-light btn back" style="background-color: #f8f9fa; border-color: #8b8b8b">Zurück zur Anleitung</button>
+<button class="nexttab btn-primary btn next">Auswahl treffen</button>
+  </div>
+
+</div>
+</body>
+
+  <script>
+  
+    $("input[name='lottery_choice']").on( "click", function() { //function is called when checkbox (input form) is clicked
+        $("#tableinfo").hide(); // hide info above table
+        var selected_box = parseInt($("input:checked").val()); // int value (1 to 15) of the selected checkbox
+        $(`.table`).css("font-weight",'normal'); // style complete table with normal font
+        // $(`.table tr:nth-child(${selected_box}) > td:nth-child(1)`).css("font-weight",'bold'); // color first column of selected row in bold
+        for (let i = 1; i < 16; i++) { // loop through each table row (table rows start at index 1)
+          if (i >= selected_box) { // if current table row is larger/equal than selected box (safe payout)
+            $(`.table tr:nth-child(${i}) > td:nth-child(1)`).css("font-weight",'bold'); // color first column of selected row in bold
+            $(`.table tr:nth-child(${i}) > td:nth-child(3)`).css("font-weight",'normal'); // undo third column of selected row in bold
+          } else { // lottery participation
+            $(`.table tr:nth-child(${i}) > td:nth-child(3)`).css("font-weight",'bold'); // color third column of selected row in bold
+            $(`.table tr:nth-child(${i}) > td:nth-child(1)`).css("font-weight",'normal'); // undo first column of selected row in bold
+          } 
+        };
+
+        if (selected_box > 1) {
+          var selected_box_before = selected_box - 1; // helper variable for last lottery scenario
+          $("#selectedscenario").html(
+            "<ul><li>Aktuell würden Sie ab Szenario " + selected_box + " die sichere Auszahlung erhalten</li><li>Falls Szenario 1 bis " + selected_box_before + " ausgelost wird, dann nehmen Sie an der Lotterie teil</li><li>Falls Szenario " + selected_box + " bis Szenario 15 ausgelost wird, dann erhalten Sie die sichere Auszahlung</li><li>Wenn bspw. Szenario 1 ausgelost wird, dann erhalten Sie zu 85% 1,50 Euro und zu 15% 0,00 Euro</li></ul>"); // outputs info text
+          } else  {
+          $("#selectedscenario").html("<ul><li>Aktuell haben Sie Szenario 1 ausgewählt</li><li>Sie erhalten in jedem Fall die sichere Auszahlung, unabhängig davon, welches Szenario ausgelost wird</li></ul>"); // outputs info text for first scenario
+          } 
+    });
+  
+  </script>
+
+{% endblock %}
+
+
+

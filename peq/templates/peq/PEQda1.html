@@ -1,0 +1,123 @@
+{% extends "global/PageLikert.html" %}
+
+<style>
+  ul {
+      list-style-type: none;
+  }
+  
+  /* li {
+    color: #f8f9fa;
+  }
+  
+  label {
+    color: black;
+  } */
+  
+</style>
+<!-- if a radiobutton text has a linebreak, a list marker is mistakenly shown  -->
+
+{% load otree static %}
+{% load listforloopcounter %}
+
+{% block head_title %}
+Experiment Orbit
+{% endblock %}
+
+{% block title %}
+
+{% endblock %}
+
+{% block content %}
+
+{% for field in form %}
+
+
+
+{% if field.html_name == "qDa1" %}
+<div class="card">
+  
+  {% comment %}check if dynamic label is used via length of var_for_templates. if not, use regular form label{% endcomment %}
+  {% if q_label|length >= 1 %}
+  <div class="card-header" style="text-align:left;">
+    <label class="statement"><b>{{ q_label|get_at_index:forloop.counter0 }}</b></label> 
+  </div>
+  {% else %}
+  <div class="card-header" style="text-align:left;">
+    <label class="statement"><b>{{ field.label }}</b></label> 
+  </div>
+  {% endif %}
+
+    <div class="card-body">
+        <ul class="{{ field.html_name }}" id="questionitem">
+            {% for choice in field %}
+                {% if forloop.counter == 1 %}
+                <li>
+                    <input id="id_{{ field.html_name }}_{{ forloop.counter }}" type="radio" name="{{ field.html_name }}" value="{{ forloop.counter }}" class="form-check-input" required>
+                    <label>Ich war eher dazu geneigt, das <i>Projekt abzubrechen</i></label>
+                </li>
+                {% elif forloop.counter == 7 %}
+                <li>
+                    <input id="id_{{ field.html_name }}_{{ forloop.counter }}" type="radio" name="{{ field.html_name }}" value="{{ forloop.counter }}" class="form-check-input" required>
+                    <label>Ich war eher dazu geneigt, das <i>Projekt fortzuführen</i></label>
+                </li>
+                {% else %}
+                <li>
+                    <input id="id_{{ field.html_name }}_{{ forloop.counter }}" type="radio" name="{{ field.html_name }}" value="{{ forloop.counter }}" class="form-check-input" required>
+                    <label>{{ forloop.counter }}</label>
+                </li>
+                {% endif %}
+            {% endfor %}
+          </ul>
+        </div>
+    </div>    
+    
+<br>   
+
+{% else %}
+<div class="card">
+  
+  {% comment %}check if dynamic label is used via length of var_for_templates. if not, use regular form label{% endcomment %}
+  {% if q_label|length >= 1 %}
+  <div class="card-header" style="text-align:left;">
+    <label class="statement"><b>{{ q_label|get_at_index:forloop.counter0 }}</b></label> 
+  </div>
+  {% else %}
+  <div class="card-header" style="text-align:left;">
+    <label class="statement"><b>{{ field.label }}</b></label> 
+  </div>
+  {% endif %}
+
+    <div class="card-body">
+        <ul class="{{ field.html_name }}" id="questionitem">
+            {% for choice in field %}
+                {% if forloop.counter == 1 %}
+                <li>
+                    <input id="id_{{ field.html_name }}_{{ forloop.counter }}" type="radio" name="{{ field.html_name }}" value="{{ forloop.counter }}" class="form-check-input" required>
+                    <label>Stimme gar nicht zu</label>
+                </li>
+                {% elif forloop.counter == 7 %}
+                <li>
+                    <input id="id_{{ field.html_name }}_{{ forloop.counter }}" type="radio" name="{{ field.html_name }}" value="{{ forloop.counter }}" class="form-check-input" required>
+                    <label>Stimme voll zu</label>
+                </li>
+                {% else %}
+                <li>
+                    <input id="id_{{ field.html_name }}_{{ forloop.counter }}" type="radio" name="{{ field.html_name }}" value="{{ forloop.counter }}" class="form-check-input" required>
+                    <label>{{ forloop.counter }}</label>
+                </li>
+                {% endif %}
+            {% endfor %}
+          </ul>
+        </div>
+    </div>    
+    
+<br>   
+
+{% endif %}
+{% endfor %}
+
+<div style="text-align:right">
+    {% next_button %}
+</div>
+
+{% endblock %}
